@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Международное сотрудничество | DataHub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #2563eb;       
+            --primary-dark: #1e40af;
+            --accent: #a3e635;        
+            --accent-text: #1a2e05;
+            
+            --bg-page: #f8fafc;
+            --text-main: #0f172a;     
+            --text-muted: #64748b;    
+            
+            --radius-xl: 32px;
+            --shadow-soft: 0 20px 40px -10px rgba(37, 99, 235, 0.1);
+            --header-height: 80px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Manrope', sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-page);
+            min-height: 100vh;
+        }
+        
+        /* --- BACKGROUND --- */
+        .iridescent-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(163, 230, 53, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(37, 99, 235, 0.1), transparent 25%);
+            filter: blur(40px);
+            animation: pulseBg 10s infinite alternate;
+        }
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        /* --- HEADER --- */
+        header {
+            height: var(--header-height);
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.6);
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+        .logo {
+            font-weight: 800; font-size: 1.5rem; color: var(--primary);
+            display: flex; align-items: center; gap: 10px; cursor: pointer;
+            text-decoration: none;
+        }
+        .logo i { color: var(--accent); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .nav-item:hover { color: var(--primary); }
+        .nav-item.active { background: var(--primary); color: white; }
+        .btn-login {
+            background: var(--text-main); color: white;
+            padding: 10px 24px; border-radius: 50px;
+            text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-login:hover { background: var(--primary); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
+
+        /* User Profile */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .profile-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .profile-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 15px);
+            right: 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1001;
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .profile-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .profile-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .profile-email {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .profile-menu {
+            padding: 10px;
+        }
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .profile-menu-item:hover {
+            background: #f8fafc;
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        .profile-menu-item i {
+            width: 20px;
+            color: var(--primary);
+        }
+        .profile-menu-item.logout {
+            color: #dc2626;
+            border-top: 1px solid #f1f5f9;
+            margin-top: 5px;
+            padding-top: 15px;
+        }
+        .profile-menu-item.logout:hover {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .profile-menu-item.logout i {
+            color: #dc2626;
+        }
+
+        /* --- INTERNATIONAL PAGE CONTENT --- */
+        .international-container {
+            margin-top: var(--header-height);
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 50px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 40px;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .section-title i {
+            color: var(--accent);
+            font-size: 2rem;
+        }
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        /* Partner Universities Map */
+        .partners-map-container {
+            position: relative;
+            height: 600px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            margin-top: 30px;
+            border: 2px solid #e2e8f0;
+        }
+        .world-map {
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path fill="%23cbd5e1" d="M0 0h1200v600H0z"/><text x="600" y="300" font-size="24" fill="%2394a3b8" text-anchor="middle">World Map</text></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .map-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        .map-marker:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+        .map-marker::after {
+            content: attr(data-country);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-main);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+        .map-marker:hover::after {
+            opacity: 1;
+        }
+        .partners-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .partner-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .partner-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+        .partner-flag {
+            width: 60px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .partner-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .partner-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Exchange Programs */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .program-card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            border: 2px solid #f1f5f9;
+            transition: all 0.4s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .program-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+            border-color: var(--primary);
+        }
+        .program-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .program-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        .program-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+        .program-desc {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+        }
+        .program-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+        }
+        .program-features li {
+            color: var(--text-muted);
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .program-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .program-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--accent-text);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* Guide Section */
+        .guide-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 30px;
+            position: relative;
+            padding-left: 40px;
+        }
+        .guide-steps:before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        .guide-step {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 2px solid #f1f5f9;
+            transition: all 0.3s;
+        }
+        .guide-step:hover {
+            border-color: var(--primary);
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+        }
+        .guide-step:before {
+            content: "";
+            position: absolute;
+            left: -33px;
+            top: 30px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .step-desc {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* Requirements Grid */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .requirement-card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+        .requirement-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+        .requirement-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .requirement-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .requirement-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .requirement-card li {
+            color: var(--text-muted);
+            line-height: 1.8;
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        .requirement-card li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+        }
+        .stat-card.accent {
+            background: linear-gradient(135deg, var(--accent) 0%, #84cc16 100%);
+            color: var(--accent-text);
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .international-container {
+                padding: 30px 20px;
+            }
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            .content-section {
+                padding: 30px 20px;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .partners-map-container {
+                height: 400px;
+            }
+            .guide-steps {
+                padding-left: 30px;
+            }
+            .guide-steps:before {
+                left: 10px;
+            }
+            .guide-step:before {
+                left: -23px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .profile-dropdown {
+                right: -10px;
+                min-width: 220px;
+            }
+            .profile-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="iridescent-bg"></div>
+
+    <header>
+        <a href="glavni.html" class="logo">
+            <i class="fas fa-layer-group"></i> DataHub
+        </a>
+        <nav class="nav-links">
+            <a href="glavni.html" class="nav-item">Об университете</a>
+            <div class="nav-item" onclick="switchTab('map')" id="tab-map">3D-тур</div>
+            <a href="priom.html" class="nav-item">Приём и поступление</a>
+            <a href="programs.html" class="nav-item">Академические программы</a>
+            <a href="mejdu.html" class="nav-item active">Международное сотрудничество</a>
+            <a href="funksia.html" class="nav-item">Функция сравнения</a>
+        </nav>
+        <div class="user-profile">
+            <div class="profile-avatar" onclick="toggleProfile()">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-header">
+                    <div class="profile-name" id="profileName">Пользователь</div>
+                    <div class="profile-email" id="profileEmail">user@example.com</div>
+                </div>
+                <div class="profile-menu">
+                    <a href="#" class="profile-menu-item">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Мой профиль</span>
+                    </a>
+                    <a href="#" class="profile-menu-item">
+                        <i class="fas fa-bookmark"></i>
+                        <span>Избранное</span>
+                    </a>
+                    <a href="#" class="profile-menu-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Настройки</span>
+                    </a>
+                    <a href="#" class="profile-menu-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Помощь</span>
+                    </a>
+                    <div class="profile-menu-item logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Выйти</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="international-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Международное сотрудничество</h1>
+            <p>Біздің университет әлемнің көптеген елдерімен серіктестік құрып, халықаралық білім беру мүмкіндіктерін ұсынады</p>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="content-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Серіктес университеттер</div>
+                </div>
+                <div class="stat-card accent">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Алмасу студенттері</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Елдер</div>
+                </div>
+                <div class="stat-card accent">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Халықаралық бағдарламалар</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partner Universities Section -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-globe-americas"></i>
+                Серіктес университеттер картасы
+            </h2>
+            <div class="section-content">
+                <p>Біздің университет әлемнің 30+ еліндегі 50+ университетпен серіктестік құрған. Төмендегі картада негізгі серіктестердің орналасуы көрсетілген.</p>
+            </div>
+            <div class="partners-map-container">
+                <div class="world-map">
+                    <!-- Europe -->
+                    <div class="map-marker" style="top: 25%; left: 45%;" data-country="Германия">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="map-marker" style="top: 20%; left: 42%;" data-country="Франция">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="map-marker" style="top: 18%; left: 48%;" data-country="Польша">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="map-marker" style="top: 22%; left: 50%;" data-country="Турция">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <!-- Asia -->
+                    <div class="map-marker" style="top: 35%; left: 75%;" data-country="Қытай">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="map-marker" style="top: 32%; left: 78%;" data-country="Корея">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="map-marker" style="top: 40%; left: 72%;" data-country="Жапония">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <!-- Americas -->
+                    <div class="map-marker" style="top: 40%; left: 20%;" data-country="АҚШ">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="map-marker" style="top: 50%; left: 25%;" data-country="Канада">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="partners-list">
+                <div class="partner-card">
+                    <div class="partner-flag">🇩🇪</div>
+                    <div class="partner-info">
+                        <h3>Германия</h3>
+                        <p>5 серіктес университеттер</p>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-flag">🇹🇷</div>
+                    <div class="partner-info">
+                        <h3>Турция</h3>
+                        <p>8 серіктес университеттер</p>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-flag">🇨🇳</div>
+                    <div class="partner-info">
+                        <h3>Қытай</h3>
+                        <p>6 серіктес университеттер</p>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-flag">🇺🇸</div>
+                    <div class="partner-info">
+                        <h3>АҚШ</h3>
+                        <p>4 серіктес университеттер</p>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-flag">🇰🇷</div>
+                    <div class="partner-info">
+                        <h3>Корея</h3>
+                        <p>3 серіктес университеттер</p>
+                    </div>
+                </div>
+                <div class="partner-card">
+                    <div class="partner-flag">🇫🇷</div>
+                    <div class="partner-info">
+                        <h3>Франция</h3>
+                        <p>4 серіктес университеттер</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exchange Programs Section -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-exchange-alt"></i>
+                Алмасу бағдарламалары
+            </h2>
+            <div class="section-content">
+                <p>Біздің университет әртүрлі халықаралық алмасу бағдарламаларын ұсынады:</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="program-title">Erasmus+</h3>
+                    </div>
+                    <p class="program-desc">
+                        Еуропалық оқу, зерттеу және стажировка мүмкіндіктері. Еуропаның 30+ еліндегі университеттермен алмасу.
+                    </p>
+                    <ul class="program-features">
+                        <li>3-12 ай оқу мерзімі</li>
+                        <li>Стипендия қамтамасыз етіледі</li>
+                        <li>Еуропалық кредиттерді тану</li>
+                        <li>Тілдік дайындық курстары</li>
+                    </ul>
+                    <span class="program-badge">Еуропа</span>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-icon">
+                            <i class="fas fa-mosque"></i>
+                        </div>
+                        <h3 class="program-title">Mevlana</h3>
+                    </div>
+                    <p class="program-desc">
+                        Түркия мен Орталық Азия арасындағы академиялық алмасу бағдарламасы. Түркияның көптеген университеттерімен серіктестік.
+                    </p>
+                    <ul class="program-features">
+                        <li>1-2 семестр оқу</li>
+                        <li>Түрік тілінде оқу мүмкіндігі</li>
+                        <li>Мәдениетаралық тәжірибе</li>
+                        <li>Транспорттық қолдау</li>
+                    </ul>
+                    <span class="program-badge">Түркия</span>
+                </div>
+
+                <div class="program-card">
+                    <div class="program-header">
+                        <div class="program-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h3 class="program-title">Academic Mobility</h3>
+                    </div>
+                    <p class="program-desc">
+                        Қазақстанның жоғары оқу орындары арасындағы академиялық мобильділік бағдарламасы. Қазақстанның барлық аймақтарындағы университеттермен.
+                    </p>
+                    <ul class="program-features">
+                        <li>1 семестр оқу</li>
+                        <li>Қазақстан ішіндегі алмасу</li>
+                        <li>Мемлекеттік қолдау</li>
+                        <li>Мәдениетаралық тәжірибе</li>
+                    </ul>
+                    <span class="program-badge">Қазақстан</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guide for International Students -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-book-reader"></i>
+                Шетел студенттері үшін нұсқаулық
+            </h2>
+            <div class="section-content">
+                <p>Біздің университетке түсу үшін қажетті барлық ақпарат:</p>
+            </div>
+            <div class="guide-steps">
+                <div class="guide-step">
+                    <span class="step-number">1-қадам</span>
+                    <h3 class="step-title">Құжаттарды дайындау</h3>
+                    <p class="step-desc">
+                        Білім туралы құжат (аттестат/диплом), паспорт көшірмесі, медициналық анықтама, 
+                        фотосуреттер және тілдік сертификаттарды дайындаңыз. Барлық құжаттар нотариалды 
+                        куәландырылуы және аудармасы қажет.
+                    </p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-number">2-қадам</span>
+                    <h3 class="step-title">Онлайн өтініш беру</h3>
+                    <p class="step-desc">
+                        Біздің веб-сайтта онлайн өтініш формасын толтырып, барлық қажетті құжаттарды 
+                        жүктеңіз. Өтініш беру мерзімі: 1 наурыз - 15 мамыр.
+                    </p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-number">3-қадам</span>
+                    <h3 class="step-title">Тестілеу</h3>
+                    <p class="step-desc">
+                        Кейбір бағдарламалар үшін қосымша тестілеу немесе сұхбат талап етілуі мүмкін. 
+                        Тестілеу күні мен орны туралы хабарланады.
+                    </p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-number">4-қадам</span>
+                    <h3 class="step-title">Виза алу</h3>
+                    <p class="step-desc">
+                        Қабылдау хаттамасын алғаннан кейін, Қазақстанға кіру үшін студенттік виза 
+                        алу қажет. Виза алу процесі 2-4 апта алады.
+                    </p>
+                </div>
+                <div class="guide-step">
+                    <span class="step-number">5-қадам</span>
+                    <h3 class="step-title">Тіркелу және оқу басталуы</h3>
+                    <p class="step-desc">
+                        Университетке келіп, тіркелуден өтіңіз. Біз сізге тұрғын үй, оқу материалы 
+                        және адаптация бойынша көмек көрсетеміз.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements Section -->
+        <div class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-clipboard-list"></i>
+                Талаптар
+            </h2>
+            <div class="section-content">
+                <p>Шетел студенттері үшін қойылатын негізгі талаптар:</p>
+            </div>
+            <div class="requirements-grid">
+                <div class="requirement-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Білім деңгейі</h3>
+                    <ul>
+                        <li>Жалпы орта білім (аттестат)</li>
+                        <li>Бакалавриат үшін: 12 жыл оқу</li>
+                        <li>Магистратура үшін: бакалавр дәрежесі</li>
+                        <li>Докторантура үшін: магистр дәрежесі</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <i class="fas fa-language"></i>
+                    <h3>Тілдік талаптар</h3>
+                    <ul>
+                        <li>Қазақ тілі: A2 деңгейі (минималды)</li>
+                        <li>Орыс тілі: B1 деңгейі</li>
+                        <li>Ағылшын тілі: IELTS 5.5+ (халықаралық бағдарламалар үшін)</li>
+                        <li>Тілдік сертификат талап етіледі</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <i class="fas fa-file-medical"></i>
+                    <h3>Денсаулық</h3>
+                    <ul>
+                        <li>Медициналық анықтама (086-У нысаны)</li>
+                        <li>ВИЧ/СПИД тесті</li>
+                        <li>Туберкулез тесті</li>
+                        <li>Емделу қабілетінің куәлігі</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Қаржылық кепілдік</h3>
+                    <ul>
+                        <li>Оқу ақысын төлеу мүмкіндігінің куәлігі</li>
+                        <li>Банк анықтамасы</li>
+                        <li>Спонсорлық хат (бар болса)</li>
+                        <li>Стипендия құжаты (бар болса)</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <i class="fas fa-passport"></i>
+                    <h3>Виза және құжаттар</h3>
+                    <ul>
+                        <li>Жарамды паспорт (кемінде 2 жыл)</li>
+                        <li>Студенттік виза</li>
+                        <li>Туғандық куәлігі (көшірме)</li>
+                        <li>Қабылдау хаттамасы</li>
+                    </ul>
+                </div>
+                <div class="requirement-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Қосымша құжаттар</h3>
+                    <ul>
+                        <li>Мотивациялық хат</li>
+                        <li>Ұсыныс хаттары (2 дана)</li>
+                        <li>Портфолио (кейбір бағдарламалар үшін)</li>
+                        <li>Жетістіктер туралы құжаттар</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="content-section" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
+            <h2 class="section-title" style="color: white;">
+                <i class="fas fa-envelope"></i>
+                Байланыс
+            </h2>
+            <div class="section-content" style="color: rgba(255,255,255,0.9);">
+                <p>Халықаралық ынтымақтастық бөлімі:</p>
+                <div style="margin-top: 25px; display: flex; flex-wrap: wrap; gap: 30px;">
+                    <div>
+                        <strong style="display: block; margin-bottom: 8px;">Email:</strong>
+                        <span>international@university.kz</span>
+                    </div>
+                    <div>
+                        <strong style="display: block; margin-bottom: 8px;">Телефон:</strong>
+                        <span>+7 (727) 123-45-67</span>
+                    </div>
+                    <div>
+                        <strong style="display: block; margin-bottom: 8px;">Мекен-жай:</strong>
+                        <span>Алматы қ., Абай даңғылы, 123</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Map marker interactions
+        document.querySelectorAll('.map-marker').forEach(marker => {
+            marker.addEventListener('click', function() {
+                const country = this.dataset.country;
+                alert(`${country} елдеріндегі серіктес университеттер туралы толық ақпарат алу үшін халықаралық бөлімге хабарласыңыз.`);
+            });
+        });
+
+        // Smooth scroll for guide steps
+        document.querySelectorAll('.guide-step').forEach(step => {
+            step.addEventListener('click', function() {
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        // Profile functions
+        function toggleProfile() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('open');
+        }
+
+        function logout() {
+            if (confirm('Шынымен шығасыз ба?')) {
+                alert('Сіз жүйеден шықтыңыз');
+                document.getElementById('profileDropdown').classList.remove('open');
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const profile = document.querySelector('.user-profile');
+            const dropdown = document.getElementById('profileDropdown');
+            if (profile && !profile.contains(event.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        function loadUserProfile() {
+            const userName = localStorage.getItem('userName') || 'Пользователь';
+            const userEmail = localStorage.getItem('userEmail') || 'user@example.com';
+            const userInitials = userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            
+            document.getElementById('profileName').textContent = userName;
+            document.getElementById('profileEmail').textContent = userEmail;
+            
+            const avatar = document.querySelector('.profile-avatar');
+            if (avatar) {
+                avatar.innerHTML = userInitials || '<i class="fas fa-user"></i>';
+            }
+        }
+
+        loadUserProfile();
+    </script>
+</body>
+</html>
+
